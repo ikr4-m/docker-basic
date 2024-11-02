@@ -1,0 +1,8 @@
+services:
+  simple-laravel:
+    container_name: simple-laravel
+    restart: unless-stopped
+    build:
+      context: .
+    ports:
+      - 8080:8080
