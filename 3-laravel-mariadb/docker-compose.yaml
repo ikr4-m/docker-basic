@@ -1,0 +1,36 @@
+services:
+  simple-laravel:
+    container_name: simple-laravel
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    env_file:
+      - ./.env
+    networks:
+      - private
+      - public
+  mariadb:
+    container_name: mariadb
+    image: docker.io/library/mariadb:11.6.1-rc
+    restart: unless-stopped
+    volumes:
+      - ./workdir/mariadb:/var/lib/mysql
+    ports:
+      - 3306:3306
+    env_file:
+      - ./.env
+    networks:
+      - private
+networks:
+  private:
+    ipam:
+      driver: default
+    internal: true
+  public:
+    ipam:
+      driver: default
+    internal: false
